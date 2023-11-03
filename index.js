@@ -16,8 +16,11 @@ const notesRoutes = require('./routes/notes')
 
 app.use('/notes', notesRoutes)
 
-app.get('/', function(req,res){
-    res.render('home')
+app.get('/', async function(req,res){
+   
+        const notes = await db.getDb().db().collection('notes').find({}).toArray()
+        res.render('home', {notes})
+  
 })
 
 db.initDb((err,db)=>{
