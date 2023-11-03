@@ -17,6 +17,31 @@ router.post('/',function(req,res){
     res.redirect(301, '/')
 })
 
+router.get('/:id', async function(req,res){
+    const id = new ObjectId(req.params.id)
+    const note = await db.getDb().db().collection('notes').findOne({_id: id})
+
+    res.render('notas/detail', {note})
+})
+
+router.get('/edit/:id', async function (req,res){
+    const id = new ObjectId(req.params.id)
+    const note = await db.getDb().db().collection('notes').findOne({_id: id})
+
+    res.render('notas/edit', {note})
+})
+
+router.post('/edit', function(req,res){
+    const data = req.body
+    const id = new ObjectId(data.id)
+    const title = data.title
+    const description = data.description
+
+    db.getDb().db().collection('notes').updateOne({_id: id},{$set: { title: title, description: description}})
+    res.redirect(301, '/')
+
+})
+
 router.post('/delete', function(req,res){
     const data = req.body
     const id = new ObjectId(data.id)

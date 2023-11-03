@@ -42,5 +42,14 @@ html, body {
   @media(max-width: 425px) {
     #main-container {
       padding: 30px;
+      max-width: 90%;
+    }
+
+    #main-container td{
+        height: 70px;
+    }
+
+    #main-container .btn{
+        height: 40px;
     }
   }
